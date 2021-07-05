@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .item1 {
+            color: red
+        }
+    </style>
+</head>
+
+<body>
+    <div class='box'>
+        <div class="item item1">1</div>
+        <div class="item">2</div>
+        <div class="item">3</div>
+    </div>
+
+    <!-- <script src='./jquery-3.1.1.js'></script> -->
+    <script src=./jq.js></script>
+    <!-- <script src=./njQuery-1.4.0.js></script> -->
+
+    <script>
+
+        $(function () {
+
+            $('.item').each((i, val) => {
+                // console.log(i)
+            })
+            // console.log($('.item'))
+            // console.log($('.item').css('color','yellow'))
+        })
+
+
+        // function fn(a,b,c){
+        //     let arr = [].slice.call(arguments)
+        //     console.log(arr)
+        //     console.log(Array.isArray(arguments)    )
+        // }
+        // fn(1,2,3)
+
+        function accAdd(a, b) {
+            var c, d, e;
+            try {
+                c = a.toString().split(".")[1].length;   // 获取a的小数位长度
+            } catch (f) {
+                c = 0;
+            }
+            try {
+                d = b.toString().split(".")[1].length;   // 获取b的小数位长度
+            } catch (f) {
+                d = 0;
+            }
+            //先求e，把a、b 同时乘以e转换成整数相加，再除以e还原
+            return e = Math.pow(10, Math.max(c, d)), (accMul(a, e) + accMul(b, e)) / e;
+        }
+        function accAdd2(a,b){
+            let al = 0;
+            let bl = 0;
+            if(a.toString().includes('.')){
+                al = a.toString().split('.')[1].length   
+            }
+            if(b.toString().includes('.')){
+                bl = b.toString().split('.').length   
+            }
+            let maxL = Math.max(al,bl)
+            let e = Math.pow(10,maxL)
+            return ( accMul(a,e) + accMul(b,e) ) / e
+
+        }
+
+        function accLoss(a, b) {
+            var c, d, e;
+            try {
+                c = a.toString().split(".")[1].length;  // 获取a的小数位长度
+            } catch (f) {
+                c = 0;
+            }
+            try {
+                d = b.toString().split(".")[1].length;  // 获取b的小数位长度
+            } catch (f) {
+                d = 0;
+            }
+            // 和加法同理
+            return e = Math.pow(10, Math.max(c, d)), (accMul(a, e) - accMul(b, e)) / e;
+        }
+
+        function accMul(a, b=100) {
+            var c = 0,
+                d = a.toString(),         // 转换为字符串 
+                e = b.toString();         // ...
+            try {
+                c += d.split(".")[1].length;      // c 累加a的小数位长度
+            } catch (f) { }
+            try {
+                c += e.split(".")[1].length;      // c 累加b的小数位长度
+            } catch (f) { }
+            // 转换为整数相乘，再除以10^c ,移动小数点，还原，利用整数相乘不会丢失精度
+            return Number(d.replace(".", "")) * Number(e.replace(".", "")) / Math.pow(10, c);
+        }
+        console.log(accMul(0.57))
+
+        function accDiv(a, b=100) {
+            var c, d, e = 0,
+                f = 0;
+            try {
+                e = a.toString().split(".")[1].length;
+            } catch (g) { }
+            try {
+                f = b.toString().split(".")[1].length;
+            } catch (g) { }
+            // 同理，转换为整数，运算后，还原
+            c = Number(a.toString().replace(".", ""))
+            d = Number(b.toString().replace(".", ""))
+            return accMul(c / d, Math.pow(10, f - e));
+        }
+
+        console.log(accDiv(0.57))
+    </script>
+</body>
+
+</html>
